@@ -68,10 +68,10 @@ public class Principal {
 		departamentos.add(new Departamento(16, "Quimica", "Barcelona"));
 
 	}
-	public int borrarDepartamento(int numeroDep) {
+	/*public int borrarDepartamento(int numeroDep) {
 		if (departamentos.contains(numeroDep)) {
 			departamentos.contains(numeroDep)
 		}
-	}
+	}*/
 
 }
