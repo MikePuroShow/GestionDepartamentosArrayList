@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class Empleado {
+public abstract class Empleado {
 	private int numeroempleado;
 	private String nombre;
 	private LocalDate fechaAlta;
@@ -58,7 +58,7 @@ public class Empleado {
 	@Override
 	public String toString() {
 		return "Empleado [numeroempleado=" + numeroempleado + ", nombre=" + nombre + ", fechaAlta=" + fechaAlta
-				+ ", salario=" + salario + ", departamento=" + departamento + "]";
+				+ ", salario=" + salario +"]";
 	}
 
 
