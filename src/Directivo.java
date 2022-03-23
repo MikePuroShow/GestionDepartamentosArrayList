@@ -10,7 +10,7 @@ public class Directivo extends Empleado {
 
     @Override
     public String toString() {
-        return "Directivo [Comision=" + Comision + ", " + super.toString() + "]";
+        return "Directivo Comision=" + Comision + ", " + super.toString() + "";
     }
 
     public void presentarse() {
@@ -19,6 +19,8 @@ public class Directivo extends Empleado {
     public  double calcularSalario() {
         return getSalario()*14 + Comision;
     }
+
+
 
 
 }

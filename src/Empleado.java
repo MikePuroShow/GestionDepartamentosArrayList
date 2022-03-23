@@ -57,8 +57,8 @@ public abstract class Empleado {
 	}
 	@Override
 	public String toString() {
-		return "Empleado [numeroempleado=" + numeroempleado + ", nombre=" + nombre + ", fechaAlta=" + fechaAlta
-				+ ", salario=" + salario +"]";
+		return " numeroempleado=" + numeroempleado + ", nombre=" + nombre + ", fechaAlta=" + fechaAlta
+				+ ", salario=" + salario +"";
 	}
 
 

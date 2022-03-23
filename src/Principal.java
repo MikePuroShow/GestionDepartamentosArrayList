@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Principal {
-    static ArrayList<Departamento> departamentos = new ArrayList();
-    static ArrayList<Empleado> empleados1 = new ArrayList();
-    static ArrayList<Empleado> empleados2 = new ArrayList();
+    static ArrayList<Departamento> departamentos = new <Departamento>ArrayList();
+    static ArrayList<Empleado> empleados1 = new <Empleado>ArrayList();
+    static ArrayList<Empleado> empleados2 = new <Empleado>ArrayList();
     private static int numeroDepartamento;
     private static String nombreDepartamento;
     private static String localizacion;
@@ -20,9 +20,10 @@ public class Principal {
         //Control + ALT + L FORMATEAR
         //cargaAutomatica(); // 3 departamentos
         //cargaAutomaticaAgregacion();
-        System.out.println("EEE");
+
         cargaComposicion();
         mostrarDepartamentos();
+        insertarEmpleado();
     }
 
     private static void mostrarDepartamentos() {
@@ -84,19 +85,48 @@ public class Principal {
         empleados2.add(new Analista(4, "Ezequiel", LocalDate.of(2022, 5, 2), 1000, null));
         departamentos.add(new Departamento(20, "Gatnie", "Sevilla", empleados2));
 
-        empleados1.get(0).setDepartamento((Departamento) departamentos.get(0));
-        empleados1.get(1).setDepartamento((Departamento) departamentos.get(0));
-        empleados2.get(0).setDepartamento((Departamento) departamentos.get(1));
+        /*empleados1.get(0).setDepartamento(departamentos.get(0));
+        empleados1.get(1).setDepartamento(departamentos.get(0));
+        empleados2.get(0).setDepartamento(departamentos.get(1));*/
+
+        Iterator<Empleado> it = empleados1.iterator();
+        while (it.hasNext()) {
+            it.next().setDepartamento(departamentos.get(0));
+        }
+        Iterator<Empleado> its = empleados2.iterator();
+        while (its.hasNext()) {
+            its.next().setDepartamento(departamentos.get(1));
+        }
     }
 
     public static void cargaComposicion() {
         departamentos.add(new Departamento(21, "Call Of Dutty", "Alaska"));
     }
+    public static void insertarEmpleado() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Introduce el numero de Departamento donde vas a insertar el empleado");
+        int dept_no = Integer.parseInt(br.readLine());
+        boolean encontrado = false;
+        int contador = 0;
+        System.out.println(existeDepartamento(dept_no));
 
-	/*public int borrarDepartamento(int numeroDep) {
-		if (departamentos.contains(numeroDep)) {
-			departamentos.contains(numeroDep)
-		}*/
+    }
 
+    private static int existeDepartamento(int dept_no) {
+        boolean encontrado=false;
+        int contador=0;
+        do {
+            if (departamentos.get(contador) != null && departamentos.get(contador).getDept_no() == dept_no) {
+                encontrado = true;
+            } else
+                contador++;
+        } while (!encontrado && contador < departamentos.size());
+        if (encontrado) {
+            return contador;
+        }
+        else{
+            return -1;
+        }
+    }
 
 }
