@@ -20,6 +20,7 @@ public class Principal {
         //Control + ALT + L FORMATEAR
         //cargaAutomatica(); // 3 departamentos
         //cargaAutomaticaAgregacion();
+        System.out.println("EEE");
         cargaComposicion();
         mostrarDepartamentos();
     }
