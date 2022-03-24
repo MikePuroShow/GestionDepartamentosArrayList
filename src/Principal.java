@@ -14,16 +14,18 @@ public class Principal {
     private static String localizacion;
     private static boolean salir1 = false;
     private static int numeroOpcion;
+    public static int dept_no_insertarEMPLEADO;
 
     public static void main(String[] args) throws IOException {
         //System.out.println(); ---> sout
         //Control + ALT + L FORMATEAR
         //cargaAutomatica(); // 3 departamentos
         //cargaAutomaticaAgregacion();
-
-        cargaComposicion();
+        insertarInteractivaDepartamentos();
         mostrarDepartamentos();
-        insertarEmpleado();
+        //System.out.println(insertarEmpleado());
+        //mostrarDepartamentos();
+
     }
 
     private static void mostrarDepartamentos() {
@@ -35,13 +37,17 @@ public class Principal {
 
     }
 
-    private static void cargaInteractiva() throws IOException {
+    private static void insertarInteractivaDepartamentos() throws IOException {
         BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Bienvenido al metodo de carga interactiva");
         while (!salir1) {
             try {
                 System.out.println("Introduza el numero de departamento");
                 numeroDepartamento = Integer.parseInt(br1.readLine());
+                if (existeDepartamento(numeroDepartamento) == 1) {
+                    System.out.println("El numero de departamento ya existe");
+                    break;
+                }
             } catch (NumberFormatException ee) {
                 System.out.println("Introduce un número válido" + " " + ee);
             }
@@ -57,7 +63,7 @@ public class Principal {
             } catch (Exception e) {
                 System.out.println("Localizacion invalida" + " " + e);
             }
-            departamentos.add(new Departamento(numeroDepartamento, nombreDepartamento, localizacion));
+            insertarDepartamentoFuncional();
             System.out.println("SI QUIERES AÑADIR OTRO DEPARTAMENTO PULSE 1");
             System.out.println("SI NO QUIERES AÑADIR MAS DEPARTAMENTOS PULSE 2");
             numeroOpcion = Integer.parseInt(br1.readLine());
@@ -65,6 +71,11 @@ public class Principal {
                 salir1 = true;
             }
         }
+    }
+
+    private static void insertarDepartamentoFuncional() {
+
+        departamentos.add(new Departamento(numeroDepartamento, nombreDepartamento, localizacion));
     }
 
 
@@ -102,31 +113,98 @@ public class Principal {
     public static void cargaComposicion() {
         departamentos.add(new Departamento(21, "Call Of Dutty", "Alaska"));
     }
-    public static void insertarEmpleado() throws IOException {
+
+    public static int insertarEmpleado() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Introduce el numero de Departamento donde vas a insertar el empleado");
-        int dept_no = Integer.parseInt(br.readLine());
+        dept_no_insertarEMPLEADO = Integer.parseInt(br.readLine());
         boolean encontrado = false;
         int contador = 0;
-        System.out.println(existeDepartamento(dept_no));
+        if (existeDepartamento(dept_no_insertarEMPLEADO) == 1) {
+            System.out.println("Introduce el numero de Empleado");
+            int empl_no = Integer.parseInt(br.readLine());
+            if (existeEmpleado(empl_no) == -1) {
+                System.out.println("PULSE 1 PARA AÑADIR ANALISTA Y DOS PARA AÑADIR DIRECTIVO");
+                int opcionEm = Integer.parseInt(br.readLine());
+                System.out.println("Introduzca el nombre del empleado");
+                String nombreEm = br.readLine();
+                System.out.println("Introduzca la fecha de alta");
+                LocalDate fechaalta = LocalDate.parse(br.readLine());
+                System.out.println("Introduzca el salario");
+                int SalarioEm = Integer.parseInt(br.readLine());
+                Empleado empl = null;
+                switch (opcionEm) {
+                    case 1:
+                        empl = new Analista(dept_no_insertarEMPLEADO, nombreEm, fechaalta, SalarioEm, departamentos.get(buscarDepartamento(dept_no_insertarEMPLEADO)));
+                        break;
+                    case 2:
+                        System.out.println("Introduzca la comision");
+                        int comisionEm = Integer.parseInt(br.readLine());
+                        empl = new Directivo(dept_no_insertarEMPLEADO, nombreEm, fechaalta, SalarioEm, departamentos.get(buscarDepartamento(dept_no_insertarEMPLEADO)), comisionEm);
+                        break;
+                }
+                insertarEmpleadoFuncional(empl, departamentos.get(buscarDepartamento(dept_no_insertarEMPLEADO)));
+            } else {
+                return 0;
+            }
+        } else {
+            return -1;
+        }
 
+
+        return 1;
     }
 
     private static int existeDepartamento(int dept_no) {
-        boolean encontrado=false;
-        int contador=0;
+        boolean encontrado = false;
+        int contador = 0;
+        do {
+            if (departamentos.size() == 0) {
+                return -1;
+            }
+            if (departamentos.get(contador) != null && departamentos.get(contador).getDept_no() == dept_no) {
+                encontrado = true;
+            } else contador++;
+        } while (!encontrado && contador < departamentos.size());
+        if (encontrado) return contador;
+        else return -1;
+    }
+
+    private static int buscarDepartamento(int dept_no) {
+        boolean encontrado = false;
+        int contador = 0;
         do {
             if (departamentos.get(contador) != null && departamentos.get(contador).getDept_no() == dept_no) {
                 encontrado = true;
-            } else
-                contador++;
+            } else contador++;
         } while (!encontrado && contador < departamentos.size());
         if (encontrado) {
             return contador;
-        }
-        else{
+        } else {
             return -1;
         }
     }
 
+    private static int existeEmpleado(int empl_no) {
+        boolean encontrado = false;
+        int contador = 0;
+        if (empleados1.size() == 0) {
+            return -1;
+        }
+        do {
+            if (empleados1.get(contador).getNumeroempleado() == empl_no) {
+                encontrado = true;
+            } else contador++;
+        } while (!encontrado && contador < empleados1.size());
+        if (encontrado) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    public static int insertarEmpleadoFuncional(Empleado empl, Departamento dept) {
+        departamentos.get(buscarDepartamento(dept_no_insertarEMPLEADO)).getEmpleados().add(empl);
+        return 1;
+    }
 }

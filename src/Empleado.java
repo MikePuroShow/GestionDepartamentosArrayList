@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public abstract class Empleado {
 	private int numeroempleado;
@@ -55,6 +56,7 @@ public abstract class Empleado {
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
+
 	@Override
 	public String toString() {
 		return " numeroempleado=" + numeroempleado + ", nombre=" + nombre + ", fechaAlta=" + fechaAlta

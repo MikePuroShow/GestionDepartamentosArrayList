@@ -5,16 +5,16 @@ public class Departamento {
 	int dept_no;
 	String dnombre;
 	String localizacion;
-	ArrayList <Empleado> empleados = new ArrayList <Empleado>();
+	ArrayList <Empleado> empleados = new ArrayList<Empleado>();
 
 
 	public Departamento(int dept_no, String dnombre, String localizacion) {
 		this.dept_no = dept_no;
 		this.dnombre = dnombre;
 		this.localizacion = localizacion;
-		this.empleados.add(new Analista(33,"Merde", LocalDate.of(2002,2,2),200,this));
-		this.empleados.add(new Analista(34,"Nuria", LocalDate.of(2002,2,2),200,this));
-		this.empleados.add(new Directivo(35,"Clara", LocalDate.of(2002,2,2),200,this,200));
+		//this.empleados.add(new Analista(33,"Merde", LocalDate.of(2002,2,2),200,this));
+		//this.empleados.add(new Analista(34,"Nuria", LocalDate.of(2002,2,2),200,this));
+		//this.empleados.add(new Directivo(35,"Clara", LocalDate.of(2002,2,2),200,this,200));
 	}
 
 	public Departamento(int dept_no, String dnombre, String localizacion, ArrayList empleados) {
@@ -46,6 +46,14 @@ public class Departamento {
 
 	public void setLocalizacion(String localizacion) {
 		this.localizacion = localizacion;
+	}
+
+	public ArrayList<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	public void setEmpleados(ArrayList<Empleado> empleados) {
+		this.empleados = empleados;
 	}
 
 	@Override
