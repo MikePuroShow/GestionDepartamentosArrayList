@@ -11,7 +11,7 @@ public class Analista extends Empleado{
 
     @Override
     public String toString() {
-        return  "Analista" + super.toString() + "";
+        return  "\tAnalista" + super.toString() + "";
     }
     public void presentarse() {
         System.out.println("Analista presentandose");
