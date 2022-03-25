@@ -24,7 +24,7 @@ public class Principal {
         System.out.println(existeEmpleado(25));
         //departamentos.add(new Departamento(15, "Domicilios", "Merida"));
         mostrarDepartamentos();
-        borrarEmpleadoInteractivo();
+        modificarEmpleadosInteractivo();
         mostrarDepartamentos();
         // System.out.println(compareToD(departamentos.get(1)));
         //System.out.println(insertarEmpleado());
@@ -172,7 +172,7 @@ public class Principal {
                 encontrado = true;
             } else contador++;
         } while (!encontrado && contador < departamentos.size());
-        if (encontrado) return contador;
+        if (encontrado) return 1;
         else return -1;
     }
 
@@ -259,4 +259,84 @@ public class Principal {
             System.out.println("No existe ese empleado");
         }
     }
+    public static int borrarDepartamentoFuncional(int dept_no){
+        int salida=0;
+        for(int i=0; i<departamentos.size();i++){
+            if (departamentos.get(i).getDept_no()==dept_no){
+                departamentos.remove(i);
+                salida=1;
+            }
+            else{
+                salida=0;
+            }
+        }
+        return salida;
+    }
+
+    public static void borrarDepartamentoInteractivo()throws IOException{
+        System.out.println("*******************************************");
+        System.out.println("Bienvenido al método para borrar departamento");
+        System.out.println("Introduzca el numero de departamento, el cual quieres borrar");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int num_dept= Integer.parseInt(br.readLine());
+        if (existeDepartamento(num_dept)==1){
+            borrarDepartamentoFuncional(num_dept);
+        }
+        else{
+            System.out.println("El numero de departamento no existe");
+        }
+    }
+    public static void modificarEmpleadosInteractivo()throws IOException {
+        boolean salir = false;
+        while (!salir) {
+            System.out.println("*******************************************");
+            System.out.println("Bienvenido al método para modificar Empleados");
+            System.out.println("Escribe que operacion desea hacer");
+            System.out.println("0.Para salir");
+            System.out.println("1.Modificar numero de Empleado");
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                int opcion = Integer.parseInt(br.readLine());
+                switch (opcion){
+                    case 0:
+                        salir=true;
+                        break;
+                    case 1:
+                        System.out.println("Escribe el numero de empleado que quieres modificar");
+                        int num_emp = Integer.parseInt(br.readLine());
+                        if (existeEmpleado(num_emp) == 1) {
+                        System.out.println("Introduce el nuevo numero de empleado");
+                        int numeronuevo = Integer.parseInt(br.readLine());
+                        if(modificarNumeroEmpleadosFuncional(num_emp,numeronuevo)==1){
+                            System.out.println("Cambio realizado con exito");
+                        }
+                        break;
+                }else{System.out.println("No existe ese numero de Empleado");}
+                    case 2:
+
+
+            }
+        }
+    }
+    public static int modificarNumeroEmpleadosFuncional(int empl_no,int numeronuevo){
+        int salida=1;
+        boolean encontrado = false;
+        int contador = 0;
+        int contador1=0;
+        if (departamentos.get(contador).getEmpleados().size() == 0) {
+            salida=-2; //COMPROBACION SI HAY EMPLEADOS.
+        }
+        for (int i=0; i<departamentos.size(); i++){
+            for (int e=0; e<departamentos.get(i).getEmpleados().size(); e++){
+                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado()==empl_no){
+                    departamentos.get(i).getEmpleados().get(e).setNumeroempleado(numeronuevo);
+                    salida=1;
+                }
+                else
+                    salida= 0;
+            }
+        }
+        return salida;
+    }
+
 }
+

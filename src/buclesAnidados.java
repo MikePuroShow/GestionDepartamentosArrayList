@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class buclesAnidados {
     static int[] animal = {1,2,3};
     static int animal1 [] = {5,6,7};
@@ -16,7 +19,7 @@ public class buclesAnidados {
         }
     }
     public static void arrayList(){
-
+    List<Integer> numeros = new ArrayList<Integer>();
     }
 
 }
