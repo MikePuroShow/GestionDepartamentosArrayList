@@ -8,6 +8,7 @@ public abstract class Empleado {
 	private double salario;
 	public Departamento departamento;
 
+
 	
 	public Empleado(int numeroempleado, String nombre, LocalDate fechaAlta, double salario, Departamento departamento) {
 		this.numeroempleado = numeroempleado;

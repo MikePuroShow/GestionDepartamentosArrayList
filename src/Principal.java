@@ -21,10 +21,10 @@ public class Principal {
         //Control + ALT + L FORMATEAR
         //cargaAutomatica(); // 3 departamentos
         departamentos.add(new Departamento(14, "Ventas", "Sevilla"));
-        System.out.println(existeEmpleado(25));
         //departamentos.add(new Departamento(15, "Domicilios", "Merida"));
         mostrarDepartamentos();
         modificarEmpleadosInteractivo();
+        //modificarEmpleadosInteractivo();
         mostrarDepartamentos();
         // System.out.println(compareToD(departamentos.get(1)));
         //System.out.println(insertarEmpleado());
@@ -83,7 +83,6 @@ public class Principal {
 
         departamentos.add(new Departamento(numeroDepartamento, nombreDepartamento, localizacion));
     }
-
 
     private static void cargaAutomatica() {
         departamentos.add(new Departamento(14, "Ventas", "Sevilla"));
@@ -151,10 +150,10 @@ public class Principal {
                 }
                 insertarEmpleadoFuncional(empl, departamentos.get(buscarDepartamento(dept_no_insertarEMPLEADO)));
             } else {
-                return 0;
+                return 0; //SI NO EXISTE EL EMPLEAOD
             }
         } else {
-            return -1;
+            return -1; //SI NO EXISTE EL DEPARTAMENTO
         }
 
 
@@ -192,20 +191,13 @@ public class Principal {
     }
 
     private static int existeEmpleado(int empl_no) {
-        int salida=1;
-        boolean encontrado = false;
-        int contador = 0;
-        int contador1=0;
-        if (departamentos.get(contador).getEmpleados().size() == 0) {
-            return -2; //SI NO HAY EMPLEADOS
-        }
-        for (int i=0; i<departamentos.size(); i++){
-            for (int e=0; e<departamentos.get(i).getEmpleados().size(); e++){
-                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado()==empl_no){
+        int salida = 0;
+        for (int i = 0; i < departamentos.size(); i++) {
+            for (int j = 0; j < departamentos.get(i).getEmpleados().size(); j++) {
+                if (departamentos.get(i).getEmpleados().get(j).getNumeroempleado() == empl_no) {
                     salida = 1;
-                }
-                else
-                    salida= 0;
+                    break;
+                } else salida = -1;
             }
         }
         return salida;
@@ -215,7 +207,6 @@ public class Principal {
         departamentos.get(buscarDepartamento(dept_no_insertarEMPLEADO)).getEmpleados().add(empl);
         return 1;
     }
-
 
     public static int compareToD(Departamento o) {
         int salida = 0;
@@ -241,52 +232,52 @@ public class Principal {
     }
 
     public static int borrarEmpleadoFuncional(int numeroEm) {
-        for (Departamento departamento: departamentos) {
+        for (Departamento departamento : departamentos) {
             departamento.getEmpleados().removeIf(i -> i.getNumeroempleado() == numeroEm);
         }
         return 1;
     }
-    public static void borrarEmpleadoInteractivo()throws IOException {
+
+    public static void borrarEmpleadoInteractivo() throws IOException {
         System.out.println("*******************************************");
         System.out.println("Bienvenido al método para borrar empleado");
         System.out.println("Introduzca el numero de Empleado, el cual quieres borrar");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int num_emp= Integer.parseInt(br.readLine());
-        if (existeEmpleado(num_emp)==1){
+        int num_emp = Integer.parseInt(br.readLine());
+        if (existeEmpleado(num_emp) == 1) {
             borrarEmpleadoFuncional(num_emp);
-        }
-        else{
+        } else {
             System.out.println("No existe ese empleado");
         }
     }
-    public static int borrarDepartamentoFuncional(int dept_no){
-        int salida=0;
-        for(int i=0; i<departamentos.size();i++){
-            if (departamentos.get(i).getDept_no()==dept_no){
+
+    public static int borrarDepartamentoFuncional(int dept_no) {
+        int salida = 0;
+        for (int i = 0; i < departamentos.size(); i++) {
+            if (departamentos.get(i).getDept_no() == dept_no) {
                 departamentos.remove(i);
-                salida=1;
-            }
-            else{
-                salida=0;
+                salida = 1;
+            } else {
+                salida = 0;
             }
         }
         return salida;
     }
 
-    public static void borrarDepartamentoInteractivo()throws IOException{
+    public static void borrarDepartamentoInteractivo() throws IOException {
         System.out.println("*******************************************");
         System.out.println("Bienvenido al método para borrar departamento");
         System.out.println("Introduzca el numero de departamento, el cual quieres borrar");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int num_dept= Integer.parseInt(br.readLine());
-        if (existeDepartamento(num_dept)==1){
+        int num_dept = Integer.parseInt(br.readLine());
+        if (existeDepartamento(num_dept) == 1) {
             borrarDepartamentoFuncional(num_dept);
-        }
-        else{
+        } else {
             System.out.println("El numero de departamento no existe");
         }
     }
-    public static void modificarEmpleadosInteractivo()throws IOException {
+
+    public static void modificarEmpleadosInteractivo() throws IOException {
         boolean salir = false;
         while (!salir) {
             System.out.println("*******************************************");
@@ -294,49 +285,178 @@ public class Principal {
             System.out.println("Escribe que operacion desea hacer");
             System.out.println("0.Para salir");
             System.out.println("1.Modificar numero de Empleado");
+            System.out.println("2.Modificar nombre de Empleado");
+            System.out.println("3.Modificar salario de Empleado");
+            System.out.println("4.Modificar fecha de alta de Empleado");
+            System.out.println("5.Modificar comision DIRECTIVO!!!!!!(ESTA OPCIÓN ES APLICABLE SOLO EN DIRECTIVOS)!!!!!");
+            System.out.println("*******************************************");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                int opcion = Integer.parseInt(br.readLine());
-                switch (opcion){
-                    case 0:
-                        salir=true;
-                        break;
-                    case 1:
-                        System.out.println("Escribe el numero de empleado que quieres modificar");
-                        int num_emp = Integer.parseInt(br.readLine());
-                        if (existeEmpleado(num_emp) == 1) {
+            int opcion = Integer.parseInt(br.readLine());
+            switch (opcion) {
+                case 0:
+                    salir = true;
+                    break;
+                case 1:
+                    System.out.println("Escribe el numero de empleado que quieres modificar");
+                    int num_emp = Integer.parseInt(br.readLine());
+                    if (existeEmpleado(num_emp) == 1) {
                         System.out.println("Introduce el nuevo numero de empleado");
                         int numeronuevo = Integer.parseInt(br.readLine());
-                        if(modificarNumeroEmpleadosFuncional(num_emp,numeronuevo)==1){
+                        if (modificarNumeroEmpleadosFuncional(num_emp, numeronuevo) == 1) {
                             System.out.println("Cambio realizado con exito");
                         }
                         break;
-                }else{System.out.println("No existe ese numero de Empleado");}
-                    case 2:
+                    } else {
+                        System.out.println("No existe ese numero de Empleado");
+                    }
+                case 2:
+                    System.out.println("Escribe el numero de empleado que quieres modificar");
+                    num_emp = Integer.parseInt(br.readLine());
+                    if (existeEmpleado(num_emp) == 1) {
+                        System.out.println("Introduce el nuevo nombre de empleado");
+                        String nombreEmpleado = br.readLine();
+                        if (modificarNombrEmpleadoFuncional(num_emp, nombreEmpleado) == 1) {
+                            System.out.println("Cambio realizado con exito");
+                            break;
+                        } else {
+                            System.out.println("No existe ese numero de Empleado o el nombre contiene caracteres inválidos");
+                        }
+                    }
+                case 3:
+                    System.out.println("Escribe el numero de empleado que quieres modificar");
+                    num_emp = Integer.parseInt(br.readLine());
+                    if (existeEmpleado(num_emp) == 1) {
+                        System.out.println("Introduce el nuevo salario de empleado");
+                        int salarionuevo = Integer.parseInt(br.readLine());
+                        if (modificarSalarioFuncional(num_emp, salarionuevo) == 1) {
+                            System.out.println("Cambio realizado con exito");
+                        }
+                        break;
+                    } else {
+                        System.out.println("No existe ese numero de Empleado");
+                    }
 
-
+                case 4:
+                    System.out.println("Escribe el numero de empleado que quieres modificar");
+                    num_emp = Integer.parseInt(br.readLine());
+                    if (existeEmpleado(num_emp) == 1) {
+                        System.out.println("Introduce la nueva fecha de empleado");
+                        LocalDate fechanueva = LocalDate.parse(br.readLine());
+                        if (modificarFechaFuncional(num_emp, fechanueva) == 1) {
+                            System.out.println("Cambio realizado con exito");
+                        }
+                        break;
+                    } else {
+                        System.out.println("No existe ese numero de Empleado");
+                    }
+                case 5:
+                    System.out.println("Escribe el numero de DIRECTIVO que quieres modificar");
+                    num_emp = Integer.parseInt(br.readLine());
+                    if (existeEmpleado(num_emp) == 1) {
+                        System.out.println("Introduce la nueva comision de DIRECTIVO");
+                        int cominueva = Integer.parseInt(br.readLine());
+                        if (modificarComisionFuncional(num_emp, cominueva) == 1) {
+                            System.out.println("Cambio realizado con exito");
+                        }
+                        break;
+                    } else {
+                        System.out.println("No existe ese numero de Empleado");
+                    }
             }
         }
     }
-    public static int modificarNumeroEmpleadosFuncional(int empl_no,int numeronuevo){
-        int salida=1;
+
+    private static int modificarComisionFuncional(int num_emp, int comisionNueva) {
+        int salida = 0;
         boolean encontrado = false;
         int contador = 0;
-        int contador1=0;
         if (departamentos.get(contador).getEmpleados().size() == 0) {
-            salida=-2; //COMPROBACION SI HAY EMPLEADOS.
+            salida = -2; //COMPROBACION SI HAY EMPLEADOS.
         }
-        for (int i=0; i<departamentos.size(); i++){
-            for (int e=0; e<departamentos.get(i).getEmpleados().size(); e++){
-                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado()==empl_no){
-                    departamentos.get(i).getEmpleados().get(e).setNumeroempleado(numeronuevo);
-                    salida=1;
-                }
-                else
-                    salida= 0;
+        for (int i = 0; i < departamentos.size(); i++) {
+            for (int e = 0; e < departamentos.get(i).getEmpleados().size(); e++) {
+                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado() == num_emp) {
+                    ((Directivo)departamentos.get(i).getEmpleados().get(e)).setComision(comisionNueva);
+                    salida = 1;
+                } else salida = 0;
             }
         }
         return salida;
     }
 
+    private static int modificarFechaFuncional(int num_emp, LocalDate fechanueva) {
+        int salida = 0;
+        boolean encontrado = false;
+        int contador = 0;
+        if (departamentos.get(contador).getEmpleados().size() == 0) {
+            salida = -2; //COMPROBACION SI HAY EMPLEADOS.
+        }
+        for (int i = 0; i < departamentos.size(); i++) {
+            for (int e = 0; e < departamentos.get(i).getEmpleados().size(); e++) {
+                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado() == num_emp) {
+                    departamentos.get(i).getEmpleados().get(e).setFechaAlta(fechanueva);
+                    salida = 1;
+                } else salida = 0;
+            }
+        }
+        return salida;
+    }
+
+    private static int modificarNumeroEmpleadosFuncional(int empl_no, int numeronuevo) {
+        int salida = 0;
+        boolean encontrado = false;
+        int contador = 0;
+        if (departamentos.get(contador).getEmpleados().size() == 0) {
+            salida = -2; //COMPROBACION SI HAY EMPLEADOS.
+        }
+        for (int i = 0; i < departamentos.size(); i++) {
+            for (int e = 0; e < departamentos.get(i).getEmpleados().size(); e++) {
+                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado() == empl_no) {
+                    departamentos.get(i).getEmpleados().get(e).setNumeroempleado(numeronuevo);
+                    salida = 1;
+                } else salida = 0;
+            }
+        }
+        return salida;
+    }
+
+    private static int modificarNombrEmpleadoFuncional(int emplo_no, String nuevoNombre) {
+        int salida = 0;
+        boolean encontrado = false;
+        int contador = 0;
+        if (departamentos.get(contador).getEmpleados().size() == 0) {
+            salida = -2; //COMPROBACION SI HAY EMPLEADOS.
+        }
+        for (int i = 0; i < departamentos.size(); i++) {
+            for (int e = 0; e < departamentos.get(i).getEmpleados().size(); e++) {
+                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado() == emplo_no) {
+                    departamentos.get(i).getEmpleados().get(e).setNombre(nuevoNombre);
+                    salida = 1;
+                    break;
+                } else salida = 0;
+            }
+        }
+        return salida;
+    }
+
+    private static int modificarSalarioFuncional(int empl, int salario) {
+        int salida = 0;
+        boolean encontrado = false;
+        int contador = 0;
+        if (departamentos.get(contador).getEmpleados().size() == 0) {
+            salida = -2; //COMPROBACION SI HAY EMPLEADOS.
+        }
+        for (int i = 0; i < departamentos.size(); i++) {
+            for (int e = 0; e < departamentos.get(i).getEmpleados().size(); e++) {
+                if (departamentos.get(i).getEmpleados().get(e).getNumeroempleado() == empl) {
+                    departamentos.get(i).getEmpleados().get(e).setSalario(salario);
+                    salida = 1;
+                    break;
+                } else salida = 0;
+            }
+        }
+        return salida;
+    }
 }
+
 

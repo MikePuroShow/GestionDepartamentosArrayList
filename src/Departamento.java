@@ -12,9 +12,9 @@ public class Departamento {
 		this.dept_no = dept_no;
 		this.dnombre = dnombre;
 		this.localizacion = localizacion;
-		this.empleados.add(new Analista(33,"Merde", LocalDate.of(2002,2,2),200,this));
 		this.empleados.add(new Analista(25,"Nuria", LocalDate.of(2002,2,2),200,this));
-		//this.empleados.add(new Directivo(35,"Clara", LocalDate.of(2002,2,2),200,this,200));
+		this.empleados.add(new Directivo(35,"Clara", LocalDate.of(2002,2,2),200,this,200));
+		this.empleados.add(new Directivo(36,"Clara", LocalDate.of(2002,2,2),200,this,200));
 	}
 
 	public Departamento(int dept_no, String dnombre, String localizacion, ArrayList empleados) {
